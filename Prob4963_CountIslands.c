@@ -30,14 +30,6 @@ void BFS(char map[][MAX_SIZE], char visited[][MAX_SIZE], int width, int height, 
 int CountIslands(char map[][MAX_SIZE], int width, int col);
 /* ============================ */
 
-void PrintMat(char map[][MAX_SIZE], int width, int height) {
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++)
-			printf("%d ", map[i][j]);			
-		puts("");
-	}
-}
-
 int main(void) {
 	int width, height;
 	char map[MAX_SIZE][MAX_SIZE];
@@ -48,8 +40,6 @@ int main(void) {
 			for (int j = 0; j < width; j++)
 				scanf("%d", &map[i][j]);
 		}
-		// printf("%d %d\n", width, height);
-		// PrintMat(map, width, height);
 		printf("%d\n", CountIslands(map, width, height));
 
 		scanf("%d", &width); scanf("%d", &height); getchar();
@@ -90,6 +80,14 @@ Position Dequeue(QueueListPtr queue) {
 	return rtrnVal;
 }
 
+/*
+position     position num
+- - - - -    - - - - -
+| * * * |    | 0 1 2 |
+| * 1 * | => | 3 * 4 |
+| * * * |    | 5 6 7 |
+- - - - -    - - - - -
+*/
 void BFS(char map[][MAX_SIZE], char visited[][MAX_SIZE], int width, int height, int row, int col) {
 	QueueList queue;
 	InitQueue(&queue);
@@ -101,17 +99,21 @@ void BFS(char map[][MAX_SIZE], char visited[][MAX_SIZE], int width, int height, 
 		Position currVertex = Dequeue(&queue);
 
 		Position surr[] = {
-			{currVertex.row, currVertex.col + 1}, // right position of currVertex
-			{currVertex.row + 1, currVertex.col}, // bottom position of currVertex
-			{currVertex.row + 1, currVertex.col + 1}, // diagnal position of currVertex
-			{currVertex.row - 1, currVertex.col + 1} // upper diagnal position of currVertex
+			{currVertex.row - 1, currVertex.col - 1}, // 0
+			{currVertex.row - 1, currVertex.col    }, // 1
+			{currVertex.row - 1, currVertex.col + 1}, // 2
+			{currVertex.row    , currVertex.col - 1}, // 3
+			{currVertex.row    , currVertex.col + 1}, // 4
+			{currVertex.row + 1, currVertex.col - 1}, // 5
+			{currVertex.row + 1, currVertex.col    }, // 6
+			{currVertex.row + 1, currVertex.col + 1} // 7
 		};
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 8; i++) {
 			int adjRow = surr[i].row;
 			int adjCol = surr[i].col;
 			if ((adjRow < height) && (adjCol < width))
-				if ((map[adjRow][adjCol] == 1) && (visited[adjRow][adjCol] == UNVISIT)) {
+				if ((visited[adjRow][adjCol] == UNVISIT) && map[adjRow][adjCol] == 1) {
 					visited[adjRow][adjCol] = VISIT;
 					Enqueue(&queue, surr[i]);
 				}
