@@ -5,6 +5,7 @@
 /* ========== Define ========== */
 #define VISIT 1
 #define UNVISIT 0
+#define MAX_SIZE 50
 
 typedef struct _Position {
 	int row;
@@ -25,20 +26,30 @@ void InitQueue(QueueListPtr queue);
 int isEmpty(QueueListPtr queue);
 void Enqueue(QueueListPtr queue, Position val);
 Position Dequeue(QueueListPtr queue);
-void BFS(char map[][50], char visited[][50], int width, int height, int row, int col);
-int CountIslands(char map[][50], int width, int col);
+void BFS(char map[][MAX_SIZE], char visited[][MAX_SIZE], int width, int height, int row, int col);
+int CountIslands(char map[][MAX_SIZE], int width, int col);
 /* ============================ */
+
+void PrintMat(char map[][MAX_SIZE], int width, int height) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++)
+			printf("%d ", map[i][j]);			
+		puts("");
+	}
+}
 
 int main(void) {
 	int width, height;
-	char map[50][50];
+	char map[MAX_SIZE][MAX_SIZE];
 
 	scanf("%d", &width); scanf("%d", &height); getchar();
 	while (width != 0 && height != 0) {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++)
-				scanf("%c", &map[i][j]);
+				scanf("%d", &map[i][j]);
 		}
+		// printf("%d %d\n", width, height);
+		// PrintMat(map, width, height);
 		printf("%d\n", CountIslands(map, width, height));
 
 		scanf("%d", &width); scanf("%d", &height); getchar();
@@ -79,7 +90,7 @@ Position Dequeue(QueueListPtr queue) {
 	return rtrnVal;
 }
 
-void BFS(char map[][50], char visited[][50], int width, int height, int row, int col) {
+void BFS(char map[][MAX_SIZE], char visited[][MAX_SIZE], int width, int height, int row, int col) {
 	QueueList queue;
 	InitQueue(&queue);
 
@@ -89,16 +100,17 @@ void BFS(char map[][50], char visited[][50], int width, int height, int row, int
 	while (! isEmpty(&queue)) {
 		Position currVertex = Dequeue(&queue);
 
-		Position surr[3] = {
+		Position surr[] = {
 			{currVertex.row, currVertex.col + 1}, // right position of currVertex
 			{currVertex.row + 1, currVertex.col}, // bottom position of currVertex
-			{currVertex.row + 1, currVertex.col + 1} // diagnal position of currVertex
+			{currVertex.row + 1, currVertex.col + 1}, // diagnal position of currVertex
+			{currVertex.row - 1, currVertex.col + 1} // upper diagnal position of currVertex
 		};
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			int adjRow = surr[i].row;
 			int adjCol = surr[i].col;
-			if ((adjRow < width) && (adjCol < height))
+			if ((adjRow < height) && (adjCol < width))
 				if ((map[adjRow][adjCol] == 1) && (visited[adjRow][adjCol] == UNVISIT)) {
 					visited[adjRow][adjCol] = VISIT;
 					Enqueue(&queue, surr[i]);
@@ -107,8 +119,8 @@ void BFS(char map[][50], char visited[][50], int width, int height, int row, int
 	}
 }
 
-int CountIslands(char map[][50], int width, int height) {
-	char visited[50][50] = { UNVISIT, };
+int CountIslands(char map[][MAX_SIZE], int width, int height) {
+	char visited[MAX_SIZE][MAX_SIZE] = { UNVISIT, };
 	int numIsland = 0;
 
 	for (int i = 0; i < height; i++)
