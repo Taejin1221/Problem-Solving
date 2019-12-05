@@ -12,13 +12,16 @@ class PriorityQueue():
 		self.size = self.size + 1
 		me = self.size - 1
 		mom = me // 2
-		while (me != 1 and self.queue[mom] > self.queue[me]):
+		while (me != 1 and self.queue[mom][1] > self.queue[me][1]):
 			self.queue[mom], self.queue[me] = self.queue[me], self.queue[mom]
 			me = mom
 			mom = me // 2
 
 
 	def pop(self):
+		if (self.isEmpty()):
+			return None
+
 		last = self.size - 1
 		self.queue[1], self.queue[last] = self.queue[last], self.queue[1]
 
@@ -35,12 +38,12 @@ class PriorityQueue():
 			elif (rightChild >= self.size):
 				smaller = leftChild
 			else:
-				if (self.queue[leftChild] < self.queue[rightChild]):
+				if (self.queue[leftChild][1] < self.queue[rightChild][1]):
 					smaller = leftChild
 				else:
 					smaller = rightChild
 
-			if (self.queue[smaller] < self.queue[me]):
+			if (self.queue[smaller][1] < self.queue[me][1]):
 				self.queue[smaller], self.queue[me] = self.queue[me], self.queue[smaller]
 				Heapify(smaller)
 
@@ -117,35 +120,54 @@ class Graph():
 		adjList = self.adjList
 
 		visited[start], shortestPath[start] = Graph.VISIT, 0
+		prevVertex = start
 
-		for currVertex in adjList:
-			for adjVertex in adjList[currVertex]:
-				queue.push(adjVertex)
+		while (prevVertex is start or not queue.isEmpty()):
+			for adjVertex in adjList[prevVertex]:
+				adjVertexNum = adjVertex[Graph.V]
+				tempWeight = shortestPath[prevVertex] + adjVertex[Graph.W]
 
-			minPath = queue.pop()
-			if (visited[minPath[0]] is Graph.UNVISIT):
-				shortestPath[minPath[0]] = minPath[1]
+				if (visited[adjVertexNum] is Graph.UNVISIT):
+					queue.push((adjVertexNum, tempWeight))
+
+			nextVertex = queue.pop()
+			while (nextVertex and visited[nextVertex[Graph.V]] is Graph.VISIT):
+				nextVertex = queue.pop()
+
+			if (nextVertex is not None):
+				nextVertexNum = nextVertex[Graph.V]
+
+				shortestPath[nextVertexNum] = nextVertex[Graph.W]
+				visited[nextVertexNum] = Graph.VISIT
+
+				prevVertex = nextVertex[Graph.V]
+
+		for short in shortestPath:
+			if shortestPath[short] is not inf:
+				print(shortestPath[short])
+			else:
+				print('INF')
 
 
 if (__name__ == '__main__'):
-	vertexSize, edgeSize = map(int, input().split())
-	start = int(input())
+	# vertexSize, edgeSize = map(int, input().split())
+	# start = int(input())
 
-	myGraph = Graph(vertexSize)
+	# myGraph = Graph(vertexSize)
 
-	for _ in range(edgeSize):
-		u, v, w = map(int, input().split())
-		myGraph.InsertEdge(u, v, w)
+	# for _ in range(edgeSize):
+	# 	u, v, w = map(int, input().split())
+	# 	myGraph.InsertEdge(u, v, w)
 
-	myGraph.DijkstraAlgorithm(start)
+	# myGraph.DijkstraAlgorithm(start)
 
 	# myGraph.PrintGraph()
 
-	# myGraph = Graph(5)
-	# myGraph.InsertEdge(5, 1, 1)
-	# myGraph.InsertEdge(1, 2, 2)
-	# myGraph.InsertEdge(1, 3, 3)
-	# myGraph.InsertEdge(2, 3, 4)
-	# myGraph.InsertEdge(2, 4, 5)
-	# myGraph.InsertEdge(3, 4, 6)
-	# myGraph.DijkstraAlgorithm(1)	
+	myGraph = Graph(5)
+	myGraph.InsertEdge(5, 1, 1)
+	myGraph.InsertEdge(1, 2, 2)
+	myGraph.InsertEdge(1, 3, 3)
+	myGraph.InsertEdge(2, 3, 4)
+	myGraph.InsertEdge(2, 4, 5)
+	myGraph.InsertEdge(3, 4, 6)
+	myGraph.DijkstraAlgorithm(1)	
