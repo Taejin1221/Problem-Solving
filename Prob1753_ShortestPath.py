@@ -18,58 +18,44 @@ class PriorityQueue():
 			mom = me // 2
 
 
-	def Heapify(self, me):
-		leftChild = me * 2
-		rightChild = me * 2 + 1
-
-		smaller = None
-	
-		if (leftChild >= self.size):
-			return
-		elif (rightChild >= self.size):
-			smaller = leftChild
-		else:
-			if (self.queue[leftChild] < self.queue[rightChild]):
-				smaller = leftChild
-			else:
-				smaller = rightChild
-
-			if (self.queue[smaller] < self.queue[me]):
-				self.queue[smaller], self.queue[me] = self.queue[me], self.queue[smaller]
-				self.Heapify(smaller)
-
-
 	def pop(self):
 		last = self.size - 1
 		self.queue[1], self.queue[last] = self.queue[last], self.queue[1]
 
 		self.size = self.size - 1
 
-		self.Heapify(1)
+		def Heapify(me):
+			leftChild = me * 2
+			rightChild = me * 2 + 1
+
+			smaller = None
+		
+			if (leftChild >= self.size):
+				return
+			elif (rightChild >= self.size):
+				smaller = leftChild
+			else:
+				if (self.queue[leftChild] < self.queue[rightChild]):
+					smaller = leftChild
+				else:
+					smaller = rightChild
+
+			if (self.queue[smaller] < self.queue[me]):
+				self.queue[smaller], self.queue[me] = self.queue[me], self.queue[smaller]
+				Heapify(smaller)
+
+		Heapify(1)
 
 		return self.queue.pop()
 		
 
 	def isEmpty(self) -> 'bool':
-		if self.queue: return False
+		if self.size > 1: return False
 		else: return True
 
 
 	def PrintQueue(self):
 		print(self.queue)
-
-if (__name__ == '__main__'):
-	myQueue = PriorityQueue()
-	myQueue.push(3)
-	myQueue.push(5)
-	myQueue.push(1)
-	myQueue.push(2)
-	myQueue.push(6)
-	myQueue.PrintQueue()
-
-	for i in range(5):
-		print(myQueue.pop())
-		myQueue.PrintQueue()
 
 
 class Graph():
@@ -91,7 +77,8 @@ class Graph():
 		for curr in self.adjList:
 			print('V({}) = {}'.format(curr, self.adjList[curr]))
 
-	def DijkstraAlgorithm(self, start):
+
+	def DijkstraAlgorithm_Array(self, start):
 		visited = { vertex: Graph.UNVISIT \
 		for vertex in range(1, self.vertexSize + 1) }
 		shortestPath = { vertex: inf \
@@ -120,6 +107,25 @@ class Graph():
 				print(shortestPath[short])
 			else:
 				print('INF')
+
+
+	def DijkstraAlgorithm(self, start):
+		visited = { vertex: Graph.UNVISIT for vertex in range(1, self.vertexSize + 1) }
+		shortestPath = { vertex: inf for vertex in range(1, self.vertexSize + 1) }
+		queue = PriorityQueue()
+
+		adjList = self.adjList
+
+		visited[start], shortestPath[start] = Graph.VISIT, 0
+
+		for currVertex in adjList:
+			for adjVertex in adjList[currVertex]:
+				queue.push(adjVertex)
+
+			minPath = queue.pop()
+			if (visited[minPath[0]] is Graph.UNVISIT):
+				shortestPath[minPath[0]] = minPath[1]
+
 
 if (__name__ == '__main__'):
 	vertexSize, edgeSize = map(int, input().split())
