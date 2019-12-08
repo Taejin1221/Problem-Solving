@@ -1,4 +1,4 @@
-// Baekjun 2750
+/* Prob2750_Sort1 */
 #include <stdio.h>
 #include <stdlib.h> /* malloc(), free() */
 

@@ -1,4 +1,4 @@
-// Baekjun 1920
+/* Prob1920_FindNum */
 #include <stdio.h>
 #include <stdlib.h>
 
