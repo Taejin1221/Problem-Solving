@@ -8,7 +8,7 @@ bool isHansu(int n) {
 	int a_next = n % 10;
 
 	int difference = a_next - a_prev;
-	while ( n != 0 ) {
+	while ( n	 != 0 ) {
 		n /= 10;
 		if ( difference != a_next - a_prev )
 			return false;
