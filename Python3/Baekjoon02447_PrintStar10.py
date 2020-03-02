@@ -14,9 +14,6 @@ def Block( size, rowStart, rowEnd ):
 		for idx in range( rowStart + unit, rowStart + 2 * unit ):
 			stars[idx] += ' ' * unit
 		Block( unit, rowStart + unit, rowStart + 2 * unit - 1 )
-		
-
-
 
 n = int( input() )
 stars = [ '' for _ in range( n ) ]
