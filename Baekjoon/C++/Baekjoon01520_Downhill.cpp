@@ -9,19 +9,24 @@ int map[500][500];
 int dp[500][500];
 
 int AllPath( int row, int col ) {
-	if ( dp[row][col] != -1 ) {
+	if ( dp[row][col] == -1 ) {
 		int up = 0, left = 0, bottom = 0, right = 0;
 
 		if ( row > 0 && map[row - 1][col] > map[row][col] )
 			up = AllPath( row - 1, col );
+
 		if ( col > 0 && map[row][col - 1] > map[row][col] )
 			left = AllPath( row, col - 1 );
+
 		if ( row < n - 1 && map[row + 1][col] > map[row][col] )
 			bottom = AllPath( row + 1, col );
+
 		if ( col < m - 1 && map[row][col + 1] > map[row][col] )
 			right = AllPath( row, col + 1 );
+
 		dp[row][col] = up + left + bottom + right;
 	}
+
 	return dp[row][col];
 }
 
