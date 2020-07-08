@@ -115,6 +115,7 @@ void UpdateTree( int me, Range range ) {
 			tree[me * 2].lazy += diff;
 			tree[me * 2 + 1].lazy += diff;
 		}
+		tree[me].lazy = 0;
 	}
 	else {
 		int mid = range.getMid();
