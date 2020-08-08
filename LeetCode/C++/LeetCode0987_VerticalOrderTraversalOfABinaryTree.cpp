@@ -1,8 +1,8 @@
-// LeetCode0987_VerticalOrderTreversalOfABinaryTree.cpp
+// LeetCode0987_VerticalOrderTraversalOfABinaryTree.cpp
 // https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/
 // August Leetcoding Challenge Day 7
+// Solution 1 ( 1772ms )
 typedef TreeNode * TreeNodePtr;
-typedef pair<int, int> pii;
 
 struct Node {
 	TreeNodePtr root;
@@ -39,6 +39,55 @@ public:
 			}
 			if ( currVec.size() )
 				ans.push_back( currVec );
+		}
+
+		return ans;
+	}
+};
+
+// Solution 2 ( 4ms )
+typedef TreeNode * TreeNodePtr;
+typedef pair<int, int> pii;
+
+struct Node {
+	TreeNodePtr root;
+	int level, x;
+	Node( TreeNodePtr r, int l, int x ): root(r), level(l), x(x) {}
+};
+
+bool compare( pii a, pii b ) {
+	if ( a.second != b.second )
+		return a.second < b.second;
+	else
+		return a.first < b.first;
+}
+
+class Solution {
+public:
+	vector<vector<int>> verticalTraversal( TreeNode* root ) {
+		vector<pii> table[2000];
+
+		queue<Node> q;
+		q.push( Node( root, 0, 1000 ) );
+		while ( !q.empty() ) {
+			Node curr = q.front(); q.pop();
+
+			table[curr.x].push_back( { curr.root->val, curr.level } );
+			if ( curr.root->left )
+				q.push( Node( curr.root->left, curr.level + 1, curr.x - 1 ) );
+			if ( curr.root->right )
+				q.push( Node( curr.root->right, curr.level + 1, curr.x + 1 ) );
+		}
+
+		vector<vector<int>> ans;
+		for ( int i = 0; i < 2000; i++ ) {
+			if ( table[i].size() ) {
+				sort( table[i].begin(), table[i].end(), compare );
+				vector<int> temp;
+				for ( pii& t : table[i] )
+					temp.push_back( t.first);
+				ans.push_back( temp );
+			}
 		}
 
 		return ans;
