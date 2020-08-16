@@ -2,7 +2,8 @@
 // https://www.acmicpc.net/problem/1107
 #include <iostream>
 #include <string>
-#include <cmath>
+
+#define abs( x ) ( ( ( x ) > 0 ) ? ( x ) : ( -( x ) ) )
 
 using namespace std;
 
@@ -28,7 +29,7 @@ int main(void) {
 	if ( n != 10 ) {
 		click = 0;
 		for ( char s : target ) {
-			int minDiff = -1;
+			int minDiff = -100;
 			for ( int i = 0; i < 10; i++)
 				if ( remocon[i] )
 					if ( abs( s - '0' - i ) < abs( s - '0' - minDiff ) )
