@@ -17,9 +17,13 @@ public:
 
 			if ( currDay >= 7 )
 				dp[currDay] = min( dp[currDay], dp[currDay - 7] + costs[1] );
+			else
+				dp[currDay] = min( dp[currDay], costs[1] );
 
 			if ( currDay >= 30 )
 				dp[currDay] = min( dp[currDay], dp[currDay - 30] + costs[2] );
+			else
+				dp[currDay] = min( dp[currDay], costs[2] );
 			currDay++;
 		}
 
