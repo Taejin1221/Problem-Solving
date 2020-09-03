@@ -21,6 +21,8 @@ int main(void) {
 		int a, b;
 		cin >> a >> b;
 
+		bool isIn[10'000] = { false, };
+
 		queue<pair<int, string>> q;
 		q.push( { a, string() } );
 		while ( !q.empty() ) {
@@ -29,13 +31,25 @@ int main(void) {
 				break;
 			q.pop();
 
-			q.push( { D( curr.first ), curr.second + 'D' } );
-			q.push( { S( curr.first ), curr.second + 'S' } );
-			q.push( { L( curr.first ), curr.second + 'L' } );
-			q.push( { R( curr.first ), curr.second + 'R' } );
+			if ( !isIn[D( curr.first )] ) {
+				isIn[D( curr.first ) ] = true;
+				q.push( { D( curr.first ), curr.second + 'D' } );
+			}
+			if ( !isIn[S( curr.first )] ) {
+				isIn[S( curr.first ) ] = true;
+				q.push( { S( curr.first ), curr.second + 'S' } );
+			}
+			if ( !isIn[L( curr.first )] ) {
+				isIn[L( curr.first ) ] = true;
+				q.push( { L( curr.first ), curr.second + 'L' } );
+			}
+			if ( !isIn[R( curr.first )] ) {
+				isIn[R( curr.first ) ] = true;
+				q.push( { R( curr.first ), curr.second + 'R' } );
+			}
 		}
 
-		cout << q.front().second << '\n';
+		cout << (q.front().second) << '\n';
 	}
 
 	return 0;
