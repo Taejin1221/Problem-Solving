@@ -16,13 +16,6 @@ struct Position {
 	int operator-( const Position& p2 ) {
 		return ( ABS(row - p2.row) + ABS(col - p2.col) );
 	}
-
-	bool operator<( const Position& n2 ) {
-		if ( row != n2.row )
-			return row < n2.row;
-		else
-			return col < n2.col;
-	}
 };
 
 struct Node {
@@ -31,6 +24,13 @@ struct Node {
 	Node( ): pos(), distance(0) {}
 	Node( int r, int c, int d ): pos(r, c), distance(d) {}
 	Node( Position p, int d ): pos(p), distance(d) {}
+
+	bool operator<( const Node& n2 ) {
+		if ( pos.row != n2.pos.row )
+			return pos.row < n2.pos.row;
+		else
+			return pos.col < n2.pos.col;
+	}
 };
 
 Position shark;
@@ -69,12 +69,6 @@ int main(void) {
 		}
 	}
 
-	for ( int i = 0; i < n; i++ ) {
-		for ( int j = 0; j < n; j++ )
-			cout << map[i][j] << ' ';
-		cout << '\n';
-	}
-
 	cout << second << '\n';
 
 	return 0;
@@ -82,7 +76,7 @@ int main(void) {
 
 Position bfs( Position start ) {
 	queue<Node> q;
-	vector<Position> list;
+	vector<Node> list;
 	bool visited[20][20] = { false, };
 
 	int minDistance = 100;
@@ -97,7 +91,7 @@ Position bfs( Position start ) {
 				break;
 			else {
 				minDistance = currNode.distance;
-				list.push_back( currPos );
+				list.push_back( currNode );
 			}
 		}
 
@@ -122,9 +116,9 @@ Position bfs( Position start ) {
 
 	if ( list.size() ) {
 		sort( list.begin(), list.end() );
-		second += list[0] - start;
+		second += list[0].distance;
 
-		return list[0];
+		return list[0].pos;
 	}
 	else
 		return Position( -1, -1 );
