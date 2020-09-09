@@ -28,4 +28,20 @@ public:
 
 		return count;
 	}
+
+	int numJewelsInStones(string J, string S) {
+		map<char, int> table;
+		for ( int i = 0; i < S.size(); i++ ) {
+			if ( tabla[S[i]] == NULL )
+				table[S[i]] = 1;
+			else
+				table[S[i]]++;
+		}
+
+		int sum = 0;
+		for ( int i = 0; i < J.size(); i++ )
+			sum += table[J[i]];
+
+		return sum;
+	}
 };
