@@ -6,8 +6,11 @@
 
 using namespace std;
 
-bool Compare( string str1, string str2 ) {
-	if ( str1.compare( str2 ) >= 0 )
+bool Compare( const string& str1, const string& str2 ) {
+	string a = str1 + str2;
+	string b = str2 + str1;
+
+	if ( a > b )
 		return true;
 	else
 		return false;
@@ -17,23 +20,30 @@ int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int n, m;
-	cin >> n >> m;
+	int k, n;
+	cin >> k >> n;
 
 	string nums[1000];
 
-	for ( int i = 0; i < n; i++ )
+	for ( int i = 0; i < k; i++ )
 		cin >> nums[i];
 
-	sort( nums, nums + n, Compare );
-
 	string maxVal = "";
-	while ( m > n ) {
-		maxVal += nums[0];
-		m--;
-	}
 
-	for ( int i = 0; i < n; i++ ) {
+	sort( nums, nums + k, Compare );
+
+	int idx = 0;
+	for ( int i = 0; i < k; i++ )
+		if ( nums[idx].size() < nums[i].size() )
+			idx = i;
+
+	for ( int i = 0; i < k; i++ ) {
+		if ( i == idx ) {
+			while ( k < n ) {
+				maxVal += nums[i];
+				n--;
+			}
+		}
 		maxVal += nums[i];
 	}
 
