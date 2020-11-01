@@ -1,4 +1,4 @@
-// Baekjoon04368_MakeConstellation.cpp
+// Baekjoon04386_MakeConstellation.cpp
 // https://www.acmicpc.net/problem/4386
 #include <cstdio>
 #include <cmath>
