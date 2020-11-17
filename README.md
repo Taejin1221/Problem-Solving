@@ -11,3 +11,6 @@ CodeForces (https://codeforces.com) <br>
 https://codeforces.com/profile/wrathlion
 
 Software Expert(Samsung) (https://https://swexpertacademy.com/main/main.do) <br />
+
+
+![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=HelloMinchan&show_icons=true&theme=graywhite&include_all_commits=true&hide=stars)
