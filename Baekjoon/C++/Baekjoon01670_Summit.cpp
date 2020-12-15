@@ -1,4 +1,4 @@
-// Baekjoon02670_Summit.cpp
+// Baekjoon01670_Summit.cpp
 // https://www.acmicpc.net/problem/1670
 #include <iostream>
 
