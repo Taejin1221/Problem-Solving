@@ -1,4 +1,4 @@
-// Codeforces1385_A.cpp
+// Codeforces_1385A.cpp
 #include <iostream>
 
 using namespace std;
