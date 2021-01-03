@@ -1,65 +1,51 @@
 // Baekjoon02263_TraversalOfTree.cpp
 // https://www.acmicpc.net/problem/2263
 #include <iostream>
-#include <vector>
+
+#define MAX_SIZE 100'000
 
 using namespace std;
 
-void PrintInorder(vector<int>& in, vector<int>& post) {
-	if ( in.size() == 0 )
+struct Range {
+	int start, end;
+	Range( ): start(0), end(0) { }
+	Range( int s, int e ): start(s), end(e) { }
+};
+
+int inorder[MAX_SIZE], postorder[MAX_SIZE];
+
+void MakePreorder( Range in, Range post ) {
+	if ( in.start > in.end )
 		return;
+	else {
+		int rootVal = postorder[post.end];
 
-	int root = post[post.size() - 1];
-	vector<int> leftIn, rightIn, leftPost, rightPost;
+		int rootIdx = in.start;
+		while (  rootIdx <= in.end && inorder[rootIdx] != rootVal )
+			rootIdx++;
 
-	bool isLeft = true;
-	for ( int& i : in ) {
-		if ( i == root ) {
-			isLeft = false;
-			continue;
-		}
+		int leftSize = rootIdx - in.start, rightSize = in.end - rootIdx;
 
-		if ( isLeft )
-			leftIn.push_back( i );
-		else
-			rightIn.push_back( i );
+		cout << rootVal << ' ';
+		MakePreorder( Range( in.start, rootIdx - 1 ), Range( post.start, post.start + leftSize - 1 ) );
+		MakePreorder( Range( rootIdx + 1, in.end ), Range( post.start + leftSize, post.end - 1 ) );
 	}
-
-	int idx = 0;
-	while ( idx < leftIn.size() )
-		leftPost.push_back(post[idx++]);
-
-	while ( idx < rightIn.size() + leftIn.size() + 1 )
-		rightPost.push_back(post[idx++]);
-
-	PrintInorder( leftIn, leftPost );
-	cout << root << ' ';
-	PrintInorder( rightIn, rightPost );
 }
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
+	cin.tie(NULL); cout.tie(NULL);
 
 	int n;
 	cin >> n;
 
-	vector<int> in, post;
-	for ( int i = 0; i < n; i++ ) {
-		int temp;
-		cin >> temp;
+	for ( int i = 0; i < n; i++ )
+		cin >> inorder[i];
 
-		in.push_back( temp );
-	}
+	for ( int i = 0; i < n; i++ )
+		cin >> postorder[i];
 
-	for ( int i = 0; i < n; i++ ) {
-		int temp;
-		cin >> temp;
-
-		post.push_back( temp );
-	}
-
-	PrintInorder( in, post );
+	MakePreorder( Range( 0, n - 1 ), Range( 0, n - 1 ) );
 	cout << '\n';
 
 	return 0;
