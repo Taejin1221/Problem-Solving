@@ -1,5 +1,19 @@
 // Baekjoon14938_SogangGround.cpp
 // https://www.acmicpc.net/problem/14938
+
+/*
+Review
+ * Date
+ 01/06/2021
+
+ * Solution
+ 기본적인 Floyd-Warshall 문제이다.
+ 모든 최단 경로 쌍을 구한 뒤에 모든 최단 경로를 탐색하며 limit보다 작은 거리에 있는 Item의 갯수들을 더한다.
+
+ * Idea
+ 시작점이 정해져있지 않다는 것을 깨닫고 모든 최단 경로 쌍을 구해야한다는 것을 알았다. -> Floyd-Warshall
+*/
+
 #include <iostream>
 #include <algorithm> /* fill() */
 
