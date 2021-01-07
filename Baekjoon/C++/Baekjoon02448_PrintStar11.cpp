@@ -1,5 +1,16 @@
 // Baekjoon02448_PrintStar11.cpp
 // https://www.acmicpc.net/problem/2448
+
+/* Review
+ * Date
+ 01/07/2021
+
+ * Solution
+ 재귀를 이용한 별찍기 문제이다. 현재 찍으려는 행의 갯수가 3개면 가작 작은 삼각형이니 찍어준다.
+ 아니라면 3개의 파트로 나뉘어 재귀가 반복되기 때문에 3개의 파트로 나눠 똑같은 재귀함수를 돌려주면 된다.
+ 인덱스를 기준으로 전달을 해줘야하기 때문에 코드가 좀 더러워졌다.
+*/
+
 #include <iostream>
 #include <algorithm>
 
