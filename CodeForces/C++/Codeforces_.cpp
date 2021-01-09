@@ -3,6 +3,10 @@
 
 using namespace std;
 
+void solveTestCase( ) {
+	
+}
+
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
@@ -10,7 +14,7 @@ int main(void) {
 	int t;
 	cin >> t;
 	while ( t-- ) {
-
+		solveTestCase( );
 	}
 
 	return 0;
