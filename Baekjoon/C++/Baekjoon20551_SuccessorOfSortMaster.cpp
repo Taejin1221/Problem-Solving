@@ -1,4 +1,6 @@
-// IUPC_B.cpp
+// Baekjoon20551_SuccessorOfSortMaster.cpp
+// https://www.acmicpc.net/problem/20551
+// IUPC B
 #include <iostream>
 
 #include <vector>

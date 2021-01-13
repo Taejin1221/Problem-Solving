@@ -1,4 +1,6 @@
-// IUPC_G.cpp
+// Baekjoon20546_MiracleTrading.cpp
+// https://www.acmicpc.net/problem/20546
+// IUPC G
 #include <iostream>
 
 using namespace std;

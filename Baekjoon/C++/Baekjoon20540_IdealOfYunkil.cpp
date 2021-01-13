@@ -1,4 +1,6 @@
-// IUPC_A.cpp
+// Baekjoon20540_IdealOfYunkil.cpp
+// https://www.acmicpc.net/problem/20540
+// IUPC A
 #include <iostream>
 
 using namespace std;
