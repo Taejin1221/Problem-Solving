@@ -17,6 +17,13 @@
  1. a + b와 c + d를 구한다.
  2. c + d를 정렬한다.
  3. a + b 배열에 있는 값들에 -를 곱한 값을 c + d에 이진 탐색으로 찾아준다.
+
+ * p.s.
+ 1/14에 재체점 되었더니 지금까지의 모든 Solution이 시간초과가 떴다. 그래서 다시 풀었다.
+ 기존엔 일단 a + b를 배열에 저장하였었다. 그 부분을 지우고 c + d배열을 이진 탐색할 때 더한 값을 찾는 식으로 바꿨다.
+ 기존의 코드는 lower_bound와 upper_bound를 모두 처음부터 끝까지 구하였다. 하지만 사실 upper_bound는 lower부터 end까지만 구하면 되지 않겠는가.
+ 그래서 그렇게 고쳤더니 맞았다. 굉장히 까다롭고 좋은 문제였다.
+ 다른 사람들의 코드를 보니 정렬을 할 때 radix sort를 하였다. 정말 똑똑한 사람들인 것 같다. 그러면 32 * n이니 시간이 많이 줄 것 같다.
 */
 
 #include <iostream>
@@ -26,6 +33,8 @@
 
 using namespace std;
 
+typedef vector<int>::iterator vii;
+
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -33,33 +42,27 @@ int main(void) {
 	int n;
 	cin >> n;
 
-	int tableSize = n * n;
-
 	int a[4'000], b[4'000], c[4'000], d[4'000];
 	for ( int i = 0; i < n; i++ )
 		cin >> a[i] >> b[i] >> c[i] >> d[i];
 
-	int idx1 = 0;
-	vector<int> table1 ( tableSize );
+	int idx = 0;
+	vector<int> table ( n * n );
 	for ( int i = 0; i < n; i++ )
 		for ( int j = 0; j < n; j++ )
-			table1[idx1++] = a[i] + b[j];
+			table[idx++] = c[i] + d[j];
 
-	int idx2 = 0;
-	vector<int> table2 ( tableSize );
-	for ( int i = 0; i < n; i++ )
-		for ( int j = 0; j < n; j++ )
-			table2[idx2++] = c[i] + d[j];
-
-	sort( table2.begin(), table2.end() );
+	sort( table.begin(), table.end() );
 
 	long ans = 0l;
-	for ( int i = 0; i < tableSize; i++ ) {
-		int value = -table1[i];
-		int upper = upper_bound( table2.begin(), table2.end(), value ) - table2.begin();
-		int lower = lower_bound( table2.begin(), table2.end(), value ) - table2.begin();
+	for ( int i = 0; i < n; i++ ) {
+		for ( int j = 0; j < n; j++ ) {
+			int value = -(a[i] + b[j]);
+			vii lower = lower_bound( table.begin(), table.end(), value );
+			vii upper = upper_bound( lower, table.end(), value );
 
-		ans += upper - lower;
+			ans += upper - lower;
+		}
 	}
 
 	cout << ans << '\n';
