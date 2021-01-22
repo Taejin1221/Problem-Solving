@@ -54,11 +54,10 @@ int main(void) {
 
 	int ans = -1;
 	queue<Node> q;
-	bool redVisited[10][10] = { false, }, blueVisited[10][10] = { false, };
+	bool visited[10][10][10][10] = { false, };
 
 	q.push( start );
-	redVisited[start.red.row][start.red.col] = true;
-	blueVisited[start.blue.row][start.blue.col] = true;
+	visited[start.red.row][start.red.col][start.blue.row][start.blue.col] = true;
 	while ( !q.empty() ) {
 		Node curr = q.front(); q.pop();
 
@@ -71,9 +70,8 @@ int main(void) {
 				continue;
 
 			if ( marbleStatus == 0 ) {
-				if ( !( redVisited[next.red.row][next.red.col] && blueVisited[next.blue.row][next.blue.col] ) ) {
-					redVisited[next.red.row][next.red.col] = true;
-					blueVisited[next.blue.row][next.blue.col] = true;
+				if ( !visited[next.red.row][next.red.col][next.blue.row][next.blue.col] ) {
+					visited[next.red.row][next.red.col][next.blue.row][next.blue.col] = true;
 					q.push( next );
 				}
 			} else if ( marbleStatus == 1 ) {
