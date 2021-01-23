@@ -4,30 +4,22 @@
 
 using namespace std;
 
+int myPow( int a, int b ) {
+	int product = 1;
+	for ( int i = 0; i < b; i++ )
+		product *= a;
+	return product;
+}
+
 int main(void) {
 	int n;
 	cin >> n;
 
-	long long sum = 0;
-	for ( int i = 1; i <= n; i++ ) {
-		if ( 1 <= i && i <= 9 )
-			sum++;
-		else if ( 10 <= i && i <= 99 )
-			sum += 2;
-		else if ( 100 <= i && i <= 999 )
-			sum += 3;
-		else if ( 1'000 <= i && i <= 9'999 )
-			sum += 4;
-		else if ( 10'000 <= i && i <= 99'999 )
-			sum += 5;
-		else if ( 100'000 <= i && i <= 999'999 )
-			sum += 6;
-		else if ( 1'000'000 <= i && i <= 9'999'999 )
-			sum += 7;
-		else if ( 10'000'000 <= i && i <= 99'999'999 )
-			sum += 8;
-		else
-			sum += 9;
+	long sum = 0l;
+	for ( int i = 0; i <= 8; i ++ ) {
+		int compare = myPow( 10, i );
+		if ( compare <= n )
+			sum += ( n <= compare * 10 - 1 ) ? ( i + 1 ) * (n - compare + 1) : ( i + 1 ) * compare * 9;
 	}
 
 	cout << sum << '\n';
