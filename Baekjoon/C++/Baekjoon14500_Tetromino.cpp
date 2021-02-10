@@ -4,53 +4,66 @@
 
 using namespace std;
 
-struct Position {
-	int row, col;
-	Position( ): row(0), col(0) {};
-	Position( int r, int c ): row(r), col(c) {};
-	bool operator!=( const Position& p2 ) const {
-		return ( this->row != p2.row || this->col != p2.col );
+typedef pair<int, int> pii;
+
+const int rowChange[4] = { -1, 0, 1, 0 },
+	colChange[4] = { 0, 1, 0, -1 };
+
+int n, m, ans;
+int paper[500][500];
+
+bool isValid( pii curr, pii prev ) {
+	if ( ( 0 <= curr.first && curr.first < n ) && ( 0 <= curr.second && curr.second < m ) )
+		if ( !( curr.first == prev.first && curr.second == prev.second ) )
+			return true;
+	return false;
+}
+
+void PutFuckShape( pii curr, pii prev, int sum ) {
+	for ( int i = 0; i < 3; i++ ) {
+		pii next1 = { curr.first + rowChange[i], curr.second + colChange[i] };
+		for ( int j = i + 1; j < 4; j++ ) {
+			pii next2 = { curr.first + rowChange[j], curr.second + colChange[j] };
+			if ( isValid( next1, prev ) && isValid( next2, prev ) ) {
+				int tempSum = sum + paper[next1.first][next1.second] + paper[next2.first][next2.second];
+				ans = max( ans, tempSum );
+			}
+		}
 	}
-};
+}
 
-int maxVal, maxRow, maxCol;
-int table[500][500];
+void dfs( pii curr, pii prev, int sum, int num ) {
+	if ( num == 4 ) {
+		ans = max( ans, sum );
+	} else {
+		int nextNum = num + 1;
+		for ( int i = 0; i < 4; i++ ) {
+			pii next = { curr.first + rowChange[i], curr.second + colChange[i] };
 
-void dfs( Position curr, Position prev, int size, int sum );
+			if ( isValid( next, prev ) ) {
+				dfs( next, curr, sum + paper[next.first][next.second], nextNum );
+				if ( nextNum == 2 )
+					PutFuckShape( next, curr, sum + paper[next.first][next.second] );
+			}
+		}
+	}
+}
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	cin >> maxRow >> maxCol;
+	cin >> n >> m;
 
-	for ( int i = 0; i < maxRow; i++ )
-		for ( int j = 0; j < maxCol; j++ )
-			cin >> table[i][j];
+	for ( int i = 0; i < n; i++ )
+		for ( int j = 0; j < m; j++ )
+			cin >> paper[i][j];
 
-	for ( int i = 0; i < maxRow; i++ )
-		for ( int j = 0; j < maxCol; j++ )
-			dfs( Position( i, j ), Position( -1, -1 ), 0, 0 );
+	for ( int i = 0; i < n; i++ )
+		for ( int j = 0; j < m; j++ )
+			dfs( { i, j }, { -1, -1 }, paper[i][j], 1 );
 
-	cout << maxVal << '\n';
+	cout << ans << '\n';
 
 	return 0;
-}
-
-void dfs( Position curr, Position prev, int size, int sum ) {
-	if ( size == 4 )
-		maxVal = max( maxVal, sum );
-	else {
-		Position nexts[4] = {
-			Position( curr.row - 1, curr.col ),
-			Position( curr.row, curr.col + 1 ),
-			Position( curr.row + 1, curr.col ),
-			Position( curr.row, curr.col - 1 )
-		};
-
-		for ( Position& next : nexts )
-			if ( next != prev )
-				if ( ( 0 <= next.row && next.row < maxRow ) && ( 0 <= next.col && next.col < maxCol ) )
-					dfs( next, curr, size + 1, sum + table[next.row][next.col] );
-	}
 }
