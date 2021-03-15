@@ -5,9 +5,6 @@ Algorithm Problem Solving (Baekjoon Online Judge, LeetCode, CodeForces, SW Exper
 - [My Profile](https://www.acmicpc.net/user/taejin1221)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/Baekjoon)
 
-[![Solved.ac
-프로필](http://mazassumnida.wtf/api/v2/generate_badge?boj=taejin1221)](https://solved.ac/taejin1221)
-
 [LeetCode](https://www.leetcode.com)
 - [My Profile](https://leetcode.com/taejin1221/)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/LeetCode)
