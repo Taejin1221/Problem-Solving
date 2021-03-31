@@ -53,7 +53,7 @@ int main(void) {
 int getArea( vector<Coordinate>& boundaries ) {
 	int area = 0;
 	for ( int i = 1; i < boundaries.size() - 1; i += 2 )
-		area += boundaries[i + 1].col - boundaries[i].col * ( boundaries[i].row - 0 );
+		area += (boundaries[i + 1].col - boundaries[i].col) * ( boundaries[i].row - 0 );
 
 	return area;
 }
