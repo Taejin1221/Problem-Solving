@@ -17,5 +17,5 @@ Algorithm Problem Solving (Baekjoon Online Judge, LeetCode, CodeForces, SW Exper
 [Programmers](https://programmers.co.kr/)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/Programmers)
 
-[Software Expert(Samsung)](https://https://swexpertacademy.com/main/main.do)
+[Software Expert](https://https://swexpertacademy.com/main/main.do)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/SWExpert)
