@@ -13,6 +13,7 @@ Algorithm Problem Solving (Baekjoon Online Judge, LeetCode, CodeForces, SW Exper
 [CodeForces](https://codeforces.com)
 - [My Profile](https://codeforces.com/profile/wrathlion)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/CodeForces)
+- Goal: cyan!
 
 [Programmers](https://programmers.co.kr/)
 - [My Codes](https://github.com/Taejin1221/Algorithm/tree/master/Programmers)
