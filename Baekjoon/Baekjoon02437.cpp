@@ -19,25 +19,20 @@ int main(void) {
 
 	sort(arr, arr + n);
 
-	if (arr[0] > 1 )
-		cout << 1;
-	else {
-		int ans = -1, sum = arr[0];
-		for (int i = 1; i < n; i++) {
-			if (arr[i] > sum + 1) {
-				ans = sum + 1;
-				break;
-			}
-
-			sum += arr[i];
+	int ans = -1, sum = 0;
+	for (int i = 0; i < n; i++) {
+		if (sum + 1 < arr[i]) {
+			ans = sum + 1;
+			break;
 		}
 
-		if (ans == -1)
-			ans = sum + 1;
-
-		cout << ans;
+		sum += arr[i];
 	}
-	cout << '\n';
+
+	if (ans == -1)
+		ans = sum + 1;
+
+	cout << ans << '\n';
 
 	return 0;
 }
