@@ -11,10 +11,6 @@ typedef long long ll;
 ll myPow(ll x, ll y) {
 	if (y == 0)
 		return 1;
-	else if (y == 1)
-		return x;
-	else if (y == 2)
-		return (x * x) % MOD;
 
 	ll result = myPow(x, y / 2);
 	result = result * result % MOD;
