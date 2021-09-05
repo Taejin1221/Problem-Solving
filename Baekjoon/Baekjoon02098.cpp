@@ -12,18 +12,11 @@ int weight[16][16];
 int dp[16][16][MAX];
 
 int solve(int start, int target, int visit) {
-	if (visit & (1 << target))
-		return -1;
-
 	if (dp[start][target][visit] == -1) {
 		dp[start][target][visit] = INF;
-		for (int i = 0; i < n; i++) {
-			if ((visit & (1 << i))) {
-				int prev = solve(start, i, visit - (1 << i));
-				if (prev != -1)
-					dp[start][target][visit] = min(dp[start][target][visit], prev + weight[i][target]);
-			}
-		}
+		for (int i = 0; i < n; i++)
+			if ((visit & (1 << i)))
+				dp[start][target][visit] = min(dp[start][target][visit], solve(start, i, visit - (1 << i)) + weight[i][target]);
 	}
 
 	return dp[start][target][visit];
