@@ -9,17 +9,17 @@ using namespace std;
 
 int n;
 int weight[16][16];
-int dp[16][16][MAX];
+int dp[16][MAX];
 
-int solve(int start, int target, int visit) {
-	if (dp[start][target][visit] == -1) {
-		dp[start][target][visit] = INF;
+int solve(int target, int visit) {
+	if (dp[target][visit] == -1) {
+		dp[target][visit] = INF;
 		for (int i = 0; i < n; i++)
 			if ((visit & (1 << i)))
-				dp[start][target][visit] = min(dp[start][target][visit], solve(start, i, visit - (1 << i)) + weight[i][target]);
+				dp[target][visit] = min(dp[target][visit], solve(i, visit - (1 << i)) + weight[i][target]);
 	}
 
-	return dp[start][target][visit];
+	return dp[target][visit];
 }
 
 int main(void) {
@@ -38,15 +38,12 @@ int main(void) {
 
 	int max2N = (1 << n) - 1;
 	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++){
-			fill(dp[i][j], dp[i][j] + max2N + 1, -1);
-			dp[i][j][0] = weight[i][j];
-		}
+		fill(dp[i], dp[i] + max2N + 1, -1);
+		dp[i][0] = weight[0][i];
 	}
 
 	int ans = INF;
-	for (int i = 0; i < n; i++)
-		ans = min(ans, solve(i, i, max2N - (1 << i)));
+	ans = min(ans, solve(0, max2N - 1));
 
 	cout << ans << '\n';
 }
