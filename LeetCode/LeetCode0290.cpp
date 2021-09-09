@@ -6,9 +6,10 @@ public:
 		vector<string> token;
 		string temp;
 		for (int i = 0; i < s.size(); i++) {
-			if (s[i] == ' ')
+			if (s[i] == ' ') {
 				token.push_back(temp);
-			else
+				temp = "";
+			} else
 				temp.push_back(s[i]);
 		}
 		token.push_back(temp);
@@ -27,9 +28,7 @@ public:
 					table1.insert({ pattern[i], token[i] });
 					table2.insert({ token[i], pattern[i] });
 				} else if (find1 != table1.end() && find2 != table2.end()) {
-					if (find1->second == token[i] && find2->second == pattern[i])
-						continue;
-					else if (find1->second != token[i] || find2->second != pattern[i])
+					if (find1->second != token[i] || find2->second != pattern[i])
 						return false;
 				} else
 					return false;
