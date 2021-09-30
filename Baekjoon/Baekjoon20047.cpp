@@ -34,9 +34,7 @@ int main(void) {
 	dp[1][n - 1] = (coin2 == strT[n - 1]);
 	for (int i = n - 2; i > 0; i--) {
 		dp[0][i] = dp[0][i + 1] & (strT[i] == s3[i]);
-		if (strT[i] == coin2)
-			dp[1][i] = dp[0][i + 1];
-		dp[1][i] |= ((strT[i] == s2[i]) & dp[1][i + 1]);
+		dp[1][i] = ((strT[i] == coin2) & dp[0][i + 1]) | ((strT[i] == s2[i]) & dp[1][i + 1]);
 	}
 
 	bool ans = false;
