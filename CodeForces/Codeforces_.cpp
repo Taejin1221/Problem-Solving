@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void solveTestCase( ) {
+void solveTestCase() {
 	
 }
 
@@ -13,8 +13,8 @@ int main(void) {
 
 	int t;
 	cin >> t;
-	while ( t-- ) {
-		solveTestCase( );
+	while (t--) {
+		solveTestCase();
 	}
 
 	return 0;
