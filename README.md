@@ -10,7 +10,7 @@ Algorithm Problem Solving (Baekjoon Online Judge, LeetCode, CodeForces, SW Exper
 
 [CodeForces](https://codeforces.com)
 - [My Profile](https://codeforces.com/profile/wrathlion)
-- Goal: cyan!
+- Goal: specialist!
 
 [Programmers](https://programmers.co.kr/)
 
