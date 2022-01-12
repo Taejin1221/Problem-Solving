@@ -1,4 +1,4 @@
- = int(input())
+_ = int(input())
 e2 = input()
 
 num_e = e2.count('e')
