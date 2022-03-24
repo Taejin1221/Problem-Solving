@@ -10,7 +10,7 @@ My Problem Solving Codes (Baekjoon Online Judge, LeetCode, CodeForces, Programme
 - Number: Integer or Integer + One Letter(for codeforces)
 - Algorithms: At most two algorithms
   - Abbreviation
-    - Impl: Implementation, BF: Bruteforcing, BS: Binary Search, BT: Backtracking
+    - Impl: Implementation, BF: Bruteforcing, BS: Binary Search, BT: Backtracking, DP: Dynamic Programming, MST: Minimum Spanning Tree
 - Difficulty: [B|S|G|P|E|M|H|1|2|3|4]
   - B: Bronze, S: Silver, G: Gold, P: Platinum (for Baekjoon)
   - E: Easy, M: Medium, H: Hard (for LeetCode)
