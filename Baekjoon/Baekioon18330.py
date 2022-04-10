@@ -1,0 +1,5 @@
+l = int(input())
+k = int(input())
+c1500 = min(l, k + 60)
+c3000 = max(l - (k + 60), 0)
+print(c1500 * 1500 + c3000 * 3000)
