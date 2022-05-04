@@ -1,0 +1,5 @@
+a, b, c, d = map(int, input().split())
+e, f, g, h = map(int, input().split())
+lower = (min(a, e), min(b, f))
+upper = (max(c, g), max(d, h))
+print(max(upper[0] - lower[0], upper[1] - lower[1]) ** 2)
