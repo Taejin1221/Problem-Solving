@@ -1,0 +1,5 @@
+a = int(input())
+b = int(input())
+c = int(input())
+ans = min(b + c * 2, a + c, a * 2 + b)
+print(ans * 2)
