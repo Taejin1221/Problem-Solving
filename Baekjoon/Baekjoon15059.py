@@ -1,0 +1,6 @@
+a, b, c = map(int, input().split())
+d, e, f = map(int, input().split())
+ans = max(d - a, 0)
+ans += max(e - b, 0)
+ans += max(f - c, 0)
+print(ans)
