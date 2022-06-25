@@ -1,6 +1,7 @@
+# Baekjoon23235.py
 a = input()
-time = 1
-while (a == '0'):
-    print(f'Case {time}: Sorting... done!')
-    time += 1
+t = 1
+while (a != '0'):
+    print(f'Case {t}: Sorting... done!')
+    t += 1
     a = input()
