@@ -35,7 +35,7 @@ int main(void) {
 
 
 	// first: number of villains, second: max time
-	pii answer[101][101];
+	pii maxShortestTime[101][101];
 
 	for (int i = 0; i < 3; i++) {
 		queue<Node> q;
@@ -47,7 +47,7 @@ int main(void) {
 		while (!q.empty()) {
 			Node curr = q.front(); q.pop();
 
-			pii& currAns = answer[curr.row][curr.col];
+			pii& currAns = maxShortestTime[curr.row][curr.col];
 
 			currAns.first++;
 			currAns.second = max(currAns.second, curr.time);
@@ -69,11 +69,11 @@ int main(void) {
 	pii ans = { 0, 0x3f3f3f3f };
 	for (int i = 1; i <= maxRow; i++) {
 		for (int j = 1; j <= maxCol; j++) {
-			if (answer[i][j].first == 3) {
-				if (answer[i][j].second == ans.second) {
+			if (maxShortestTime[i][j].first == 3) {
+				if (maxShortestTime[i][j].second == ans.second) {
 					ans.first++;
-				} else if (answer[i][j].second < ans.second) {
-					ans.second = answer[i][j].second;
+				} else if (maxShortestTime[i][j].second < ans.second) {
+					ans.second = maxShortestTime[i][j].second;
 					ans.first = 1;
 				}
 			}
