@@ -1,95 +1,88 @@
-// Baekjoon01504_SpecificShortestPath.cpp
+// Baekjoon01504.cpp
 // https://www.acmicpc.net/problem/1504
 #include <iostream>
+
 #include <queue>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
 struct Node {
-	int v, w;
+	int vertex, weight;
 	Node() {}
-	Node( int vertex, int weight ): v(vertex), w(weight) {}
-};
+	Node(int v, int w): vertex(v), weight(w) {}
 
-struct compare {
-	bool operator()( const Node& n1, const Node& n2 ) const {
-		if ( n1.w != n2.w )
-			return n1.w > n2.w;
-		else
-			return n1.v > n2.v;
+	bool operator<(const Node& n2) const {
+		return weight > n2.weight;
 	}
 };
 
 vector<Node> adjList[801];
 
-int Dijkstra( int start, int end );
-
-int main(void) {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-
-	int n, e;
-	cin >> n >> e;
-
-	for ( int i = 0; i < e; i++ ) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		adjList[a].push_back( Node( b, c ) );
-		adjList[b].push_back( Node( a, c ) );
-	}
-
-	int target1, target2;
-	cin >> target1 >> target2;
-
-	int t1_cost = Dijkstra( 1, target1 ), t2_cost = Dijkstra( 1, target2 );
-	int t1_t2 = Dijkstra( target1, target2 );
-	int t1_n = Dijkstra( target1, n ), t2_n = Dijkstra( target2, n );
-
-	if ( t1_t2 == -1 )
-		cout << -1;
-	else if ( t1_cost == -1 ) {
-		if ( t1_n == -1 )
-			cout << -1;
-		else
-			cout << t2_cost + t1_t2 + t1_n;
-	} else if ( t2_cost == -1 ) {
-		if ( t2_n == -1 )
-			cout << -1;
-		else
-			cout << t1_cost + t1_t2 + t2_n;
-	} else {
-		int totalT1 = t1_cost + t1_t2 + t2_n;
-		int totalT2 = t2_cost + t1_t2 + t1_n;
-	
-		int total = (( totalT1 < totalT2 ) ? totalT1 : totalT2);
-		cout << total;
-	}
-
-	cout << '\n';
-
-	return 0;
-}
-
-int Dijkstra( int start, int end ) {
+int getShortest(int start, int end) {
+	priority_queue<Node> pq;
 	bool visited[801] = { false, };
-	priority_queue<Node, vector<Node>, compare> pq;
 
-	Node currNode;
-	pq.push( Node( start, 0 ) );
-	while ( !pq.empty() ) {
-		currNode = pq.top(); pq.pop();
-		if ( currNode.v == end )
-			return currNode.w;
+	pq.push(Node(start, 0));
 
-		if ( !visited[currNode.v] ) {
-			visited[currNode.v] = true;
-			for ( auto adjNode : adjList[currNode.v] ) {
-				if ( !visited[adjNode.v] )
-					pq.push( Node( adjNode.v, currNode.w + adjNode.w ) );
-			}
+	int result = -1;
+	while (!pq.empty()) {
+		Node curr = pq.top(); pq.pop();
+		if (curr.vertex == end) {
+			result = curr.weight;
+			break;
+		}
+
+		if (!visited[curr.vertex]) {
+			visited[curr.vertex] = true;
+			for (const Node& adj : adjList[curr.vertex])
+				if (!visited[adj.vertex])
+					pq.push(Node(adj.vertex, curr.weight + adj.weight));
 		}
 	}
 
-	return -1;
+	return result;
+}
+
+int main(void) {
+	ios_base::sync_with_stdio(false);
+	cin.tie(0);
+
+	int n, m;
+	cin >> n >> m;
+
+	for (int i = 0; i < m; i++) {
+		int v, u, w;
+		cin >> v >> u >> w;
+
+		adjList[v].push_back(Node(u, w));
+		adjList[u].push_back(Node(v, w));
+	}
+
+	int v1, v2;
+	cin >> v1 >> v2;
+
+	int s_v1 = getShortest(1, v1), s_v2 = getShortest(1, v2);
+	int v1_v2 = getShortest(v1, v2);
+	int v1_e = getShortest(v1, n), v2_e = getShortest(v2, n);
+
+	int path1 = -1, path2 = -1;
+	if (!(s_v1 == -1 || v1_v2 == -1 || v2_e == -1))
+		path1 = s_v1 + v1_v2 + v2_e;
+
+	if (!(s_v2 == -1 || v1_v2 == -1 || v1_e == -1))
+		path2 = s_v2 + v1_v2 + v1_e;
+
+	if (path1 == -1 && path2 == -1)
+		cout << -1;
+	else if (path1 == -1)
+		cout << path2;
+	else if (path2 == -1)
+		cout << path1;
+	else
+		cout << min(path1, path2);
+	cout << '\n';
+
+	return 0;
 }
