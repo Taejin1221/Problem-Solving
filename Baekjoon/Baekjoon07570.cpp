@@ -22,9 +22,8 @@ int main(void) {
 	int ans = 0;
 	for (int i = 1; i <= n; i++) {
 		int curr = 1;
-		while (i <= n && numPosition[i] < numPosition[i + 1]) {
+		while (i <= n && numPosition[i] < numPosition[i + 1])
 			curr++, i++;
-		}
 
 		ans = max(ans, curr);
 	}
